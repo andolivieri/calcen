@@ -203,7 +203,7 @@ class Solutore{
 		while(gen.hasNext()) {
 			perm = gen.next();
 			//JSTPermutationGenerator.print(perm);
-			solution = new HashMap<>();
+			solution = new HashMap<Character, Integer>();
 			for(int i=0; i<p.numeroSimboli(); i++){
 				solution.put(Character.valueOf(characters.charAt(i)), perm.get(i).intValue());
 			}
