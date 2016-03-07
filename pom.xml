@@ -3,4 +3,20 @@
   <groupId>it.andolivieri</groupId>
   <artifactId>calcen</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <plugins>
+        <!-- we want JDK 1.6 source and binary compatiblility -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+                <executable>${JAVA_HOME}/bin/javac</executable>
+          		<compilerVersion>1.8</compilerVersion>
+            </configuration>
+        </plugin>
+        <!-- ... -->
+        <!-- we want sources to be processed by a specific 1.6 javac -->
+        
+    </plugins>
 </project>

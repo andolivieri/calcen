@@ -23,7 +23,7 @@ public class KPermutationGenerator<T> {
 		s.add(Integer.valueOf(3));
 		s.add(Integer.valueOf(4));
 		
-		KPermutationGenerator<Integer> g = new KPermutationGenerator<>(s, 3);
+		KPermutationGenerator<Integer> g = new KPermutationGenerator<Integer>(s, 3);
 		
 		while(g.hasNext())
 			System.out.println(g.next());
@@ -51,7 +51,7 @@ public class KPermutationGenerator<T> {
 		currentSubset = new HashSet<T>();
 		for(int i=0; i<K;i++)
 			currentSubset.add(elements.get(comb[i]));
-		gen = new JSTPermutationGenerator<>(currentSubset);
+		gen = new JSTPermutationGenerator<T>(currentSubset);
 	}
 	
 	public boolean hasNext(){
