@@ -1,4 +1,4 @@
-package it.andolivieri.calcoloenigmatico.generators;
+package it.andolivieri.calcoloenigmatico.solvers.generators;
 
 import java.util.ArrayList;
 import java.util.HashSet;
