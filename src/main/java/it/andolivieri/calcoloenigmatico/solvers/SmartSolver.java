@@ -27,7 +27,7 @@ public class SmartSolver extends Solver{
 			digits.add(Integer.valueOf(i));
 		}
 
-		Deque<Expression> exprsStack = new ArrayDeque<Expression>();
+		Set<Expression> expressions = new HashSet<Expression>();
 		p.expressions.sort(new Comparator<Expression>() {
 
 			public int compare(Expression o1, Expression o2) {
@@ -37,10 +37,10 @@ public class SmartSolver extends Solver{
 		});
 
 		for(Expression e : p.expressions){
-			exprsStack.push(e);
+			expressions.add(e);
 		}
 		
-		if(!recurseFind(exprsStack, digits, soluzione)){
+		if(!recurseFind(expressions, digits, soluzione)){
 			return null;
 		}
 
@@ -48,7 +48,7 @@ public class SmartSolver extends Solver{
 
 	}
 
-	private boolean recurseFind(Deque<Expression> expressions, Set<Integer> digits, Map<Character, Integer> solution){
+	private boolean recurseFind(Set<Expression> expressions, Set<Integer> digits, Map<Character, Integer> solution){
 
 		Expression curExp;
 		KPermutationGenerator<Integer> permGen;
@@ -65,7 +65,7 @@ public class SmartSolver extends Solver{
 
 		// Recursive step: solution is still partial OR more expression to compute
 
-		curExp = expressions.pop();
+		curExp = popEasyiestExpression(expressions, solution);
 		// Solution is already complete, just proceed verification
 		if(digits.size() == 0){
 			if(curExp.evaluate(solution, base)){
@@ -73,7 +73,7 @@ public class SmartSolver extends Solver{
 			}else{
 				willItBlend = false;
 			}
-			expressions.push(curExp);
+			expressions.add(curExp);
 			return willItBlend;
 		}
 
@@ -119,10 +119,32 @@ public class SmartSolver extends Solver{
 
 		}
 		
-		expressions.push(curExp);
+		expressions.add(curExp);
 
 		return willItBlend;
 
+	}
+	
+	public Expression popEasyiestExpression(Set<Expression> expressions, Map<Character, Integer> solution){
+		// Pops from expressions set the expression with the greatest
+		// number of placeholders contained in given solution
+		int bestMatch = Integer.MAX_VALUE;
+		Expression best = null;
+		Set<Character> solutionChrs = solution.keySet();
+		Set<Character> exprChrs;
+		Set<Character> intersection;
+		for (Expression e : expressions) {
+			intersection = new HashSet<Character>(e.placeholders());
+			intersection.removeAll(solutionChrs);
+			if(intersection.size() < bestMatch){
+				best = e;
+				bestMatch = intersection.size();
+			}
+			
+		}
+		
+		expressions.remove(best);
+		return best;
 	}
 
 }

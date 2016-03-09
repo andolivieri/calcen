@@ -49,19 +49,29 @@ public class Problem{
 		Map<Character, Integer> char2int = new HashMap<Character, Integer>();
 				
 		
+		
 		return null;
 	}
 	
 	private String randomExpr(){
 		Random r = new Random();
-		Operation o;
+		Operation o = null;
+		int result, operand1, operand2;
 		switch(r.nextInt(3)){
 			case 0:
 				o = Operation.SUM;
+				result = r.nextInt(899) + 100;
+				operand1 = result - (r.nextInt(898) + 1);
+				operand2 = result - operand1;
 			default:
-				break;
+				o = Operation.SUM;
+				result = r.nextInt(899) + 100;
+				operand1 = result - (r.nextInt(898) + 1);
+				operand2 = result - operand1;
 		}
-		return null;
+		
+		return operand1+o.toString()+operand2+"="+result;
+		
 	}
 	
 

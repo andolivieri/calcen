@@ -102,5 +102,19 @@ public class Expression{
 	public String toString(){
 		return operand1 + operator.toString() + operand2 + "=" + result; 
 	}
+	
+	@Override
+	public boolean equals(Object o1){
+		if(o1==null)
+			return false;
+		if(!(o1 instanceof Expression))
+			return false;
+		Expression e1 = (Expression)o1;
+		return e1.operand1 == operand1 && 
+				e1.operand2 == operand2 && 
+				e1.result == result && 
+				e1.operator == operator;
+		
+	}
 
 }
