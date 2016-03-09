@@ -20,31 +20,24 @@ public class SmartSolver extends Solver{
 
 	protected Map<Character, Integer> findSolution(Problem p){
 
-		Map<Character, Integer> soluzione = new HashMap<Character, Integer>();
-		
+		Map<Character, Integer> solution = new HashMap<Character, Integer>();
+
 		Set<Integer> digits = new HashSet<Integer>(p.base);
 		for(int i=0;i<p.base;i++){
 			digits.add(Integer.valueOf(i));
 		}
 
 		Set<Expression> expressions = new HashSet<Expression>();
-		p.expressions.sort(new Comparator<Expression>() {
-
-			public int compare(Expression o1, Expression o2) {
-				return o2.placeholdersCount() - o1.placeholdersCount();
-			}
-
-		});
 
 		for(Expression e : p.expressions){
 			expressions.add(e);
 		}
-		
-		if(!recurseFind(expressions, digits, soluzione)){
+
+		if(!recurseFind(expressions, digits, solution)){
 			return null;
 		}
 
-		return soluzione;
+		return solution;
 
 	}
 
@@ -65,7 +58,12 @@ public class SmartSolver extends Solver{
 
 		// Recursive step: solution is still partial OR more expression to compute
 
+		// Pick the easiest expression given current solution
+		// i.e. the one with least unsolved symbols
+		// from given solution
 		curExp = popEasyiestExpression(expressions, solution);
+
+
 		// Solution is already complete, just proceed verification
 		if(digits.size() == 0){
 			if(curExp.evaluate(solution, base)){
@@ -77,13 +75,11 @@ public class SmartSolver extends Solver{
 			return willItBlend;
 		}
 
-
-		
 		// Find solution on current expression digits - solution digits
 		Set<Character> diff = new HashSet<Character>(curExp.placeholders());
 		diff.removeAll(solution.keySet());
 		permGen = new KPermutationGenerator<Integer>(digits, diff.size());
-		
+
 		while(permGen.hasNext()) {
 			steps++;
 			curPerm = permGen.next();
@@ -101,7 +97,7 @@ public class SmartSolver extends Solver{
 				}
 
 				willItBlend = recurseFind(expressions, digits, curSol);
-				
+
 				if(willItBlend){
 					solution.clear();
 					solution.putAll(curSol);
@@ -118,33 +114,33 @@ public class SmartSolver extends Solver{
 			}
 
 		}
-		
+
 		expressions.add(curExp);
 
 		return willItBlend;
 
 	}
-	
+
 	public Expression popEasyiestExpression(Set<Expression> expressions, Map<Character, Integer> solution){
-		// Pops from expressions set the expression with the greatest
-		// number of placeholders contained in given solution
-		int bestMatch = Integer.MAX_VALUE;
+
+		int bestMatchValue = Integer.MAX_VALUE;
 		Expression best = null;
+
+		// Pick the expression with the greatest number
+		// of placeholders contained in given solution
 		Set<Character> solutionChrs = solution.keySet();
-		Set<Character> exprChrs;
-		Set<Character> intersection;
+		Set<Character> difference;
 		for (Expression e : expressions) {
-			intersection = new HashSet<Character>(e.placeholders());
-			intersection.removeAll(solutionChrs);
-			if(intersection.size() < bestMatch){
+			difference = new HashSet<Character>(e.placeholders());
+			difference.removeAll(solutionChrs);
+			if(difference.size() < bestMatchValue){
 				best = e;
-				bestMatch = intersection.size();
+				bestMatchValue = difference.size();
 			}
-			
+
 		}
-		
+
 		expressions.remove(best);
 		return best;
 	}
-
 }
