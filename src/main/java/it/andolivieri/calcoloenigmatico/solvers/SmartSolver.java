@@ -29,9 +29,7 @@ public class SmartSolver extends Solver{
 
 		Set<Expression> expressions = new HashSet<Expression>();
 
-		for(Expression e : p.expressions){
-			expressions.add(e);
-		}
+		expressions.addAll(p.expressions);
 
 		if(!recurseFind(expressions, digits, solution)){
 			return null;
@@ -85,16 +83,15 @@ public class SmartSolver extends Solver{
 			curPerm = permGen.next();
 			curSol.putAll(solution);
 			int i = 0;
+			
 			for (Character c : diff) {
 				curSol.put(c, curPerm.get(i).intValue());
 				i++;
 			}
 
 			if(curExp.evaluate(curSol, base)){
-				// Pop digits
-				for (Character ch : curSol.keySet()) {
-					digits.remove(curSol.get(ch));
-				}
+				// Pop digits of current solution
+				digits.removeAll(curSol.values());
 
 				willItBlend = recurseFind(expressions, digits, curSol);
 
@@ -104,9 +101,7 @@ public class SmartSolver extends Solver{
 					break;
 				}else{
 					// push digits back in
-					for (Character ch : curSol.keySet()) {
-						digits.add(curSol.get(ch));
-					}
+					digits.addAll(curSol.values());
 				}
 
 			}else{
@@ -126,8 +121,8 @@ public class SmartSolver extends Solver{
 		int bestMatchValue = Integer.MAX_VALUE;
 		Expression best = null;
 
-		// Pick the expression with the greatest number
-		// of placeholders contained in given solution
+		// Pick the expression with the smallest number
+		// of unsolved placeholders
 		Set<Character> solutionChrs = solution.keySet();
 		Set<Character> difference;
 		for (Expression e : expressions) {
