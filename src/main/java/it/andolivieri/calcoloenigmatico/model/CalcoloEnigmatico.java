@@ -2,6 +2,7 @@ package it.andolivieri.calcoloenigmatico.model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,14 +26,11 @@ class BadInputException extends Exception{
 public class CalcoloEnigmatico {
 
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		if(args.length!=1) {
-			throw new IllegalArgumentException("Specificare il path!");
-		}
-		Path input = Paths.get(args[0]);
+		
+		String path = args.length > 0 ? args[0] : null;
 
 		CalcoloEnigmatico c = new CalcoloEnigmatico();
-		Problem p = c.leggiDaFile(input, 10);
+		Problem p = c.leggiDaFile(path, 10);
 		
 		Solver solver = new SmartSolver();
 		
@@ -49,10 +47,22 @@ public class CalcoloEnigmatico {
 
 	}
 
-	public Problem leggiDaFile(Path path, int base) throws IOException, BadInputException{
+	public Problem leggiDaFile(String path, int base) throws IOException, BadInputException, URISyntaxException{
 
+		ClassLoader classLoader = getClass().getClassLoader();
+		
+		
 		Charset charset = Charset.forName("US-ASCII");
-		BufferedReader reader =  Files.newBufferedReader(path, charset);
+		
+		Path filePath;
+		
+		if(path==null){
+			filePath = Paths.get(classLoader.getResource("sample.txt").toURI());
+		}else{
+			filePath = Paths.get(path);
+		}
+		
+		BufferedReader reader =  Files.newBufferedReader(filePath, charset);
 
 		Problem p = new Problem();
 		Expression o;
