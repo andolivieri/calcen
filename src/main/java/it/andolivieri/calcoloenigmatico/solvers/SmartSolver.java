@@ -1,8 +1,5 @@
 package it.andolivieri.calcoloenigmatico.solvers;
 
-import java.util.ArrayDeque;
-import java.util.Comparator;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -59,7 +56,7 @@ public class SmartSolver extends Solver{
 		// Pick the easiest expression given current solution
 		// i.e. the one with least unsolved symbols
 		// from given solution
-		curExp = popEasyiestExpression(expressions, solution);
+		curExp = popEasiestExpression(expressions, solution);
 
 
 		// Solution is already complete, just proceed verification
@@ -116,7 +113,7 @@ public class SmartSolver extends Solver{
 
 	}
 
-	public Expression popEasyiestExpression(Set<Expression> expressions, Map<Character, Integer> solution){
+	public Expression popEasiestExpression(Set<Expression> expressions, Map<Character, Integer> solution){
 
 		int bestMatchValue = Integer.MAX_VALUE;
 		Expression best = null;
