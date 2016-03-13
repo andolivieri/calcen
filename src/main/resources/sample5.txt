@@ -1,0 +1,6 @@
+FA-P=K
+ND/AK=A
+DCA/FFA=D
+FA*ND=DCA
+P*AK=FFA
+K-A=D

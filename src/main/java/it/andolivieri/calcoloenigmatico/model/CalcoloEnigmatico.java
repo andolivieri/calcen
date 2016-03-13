@@ -44,6 +44,8 @@ public class CalcoloEnigmatico {
 		System.out.println(
 				String.format(" [%s steps in %s msec]", solver.steps, solver.lastExecTime)
 				);
+		
+		assert p.verifySolution(result);
 
 	}
 
@@ -57,7 +59,7 @@ public class CalcoloEnigmatico {
 		Path filePath;
 		
 		if(path==null){
-			filePath = Paths.get(classLoader.getResource("sample.txt").toURI());
+			filePath = Paths.get(classLoader.getResource("sample9.txt").toURI());
 		}else{
 			filePath = Paths.get(path);
 		}

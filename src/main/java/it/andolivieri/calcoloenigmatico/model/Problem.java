@@ -14,7 +14,7 @@ public class Problem{
 		this.expressions = new ArrayList<Expression>();
 	}
 	
-	public boolean verifySolution(HashMap<Character, Integer> solution){
+	public boolean verifySolution(Map<Character, Integer> solution){
 		for (Expression operazione : expressions) {
 			if(!operazione.evaluate(solution, base))
 				return false;

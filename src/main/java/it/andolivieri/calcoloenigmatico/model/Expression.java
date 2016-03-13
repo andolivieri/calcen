@@ -16,7 +16,7 @@ public class Expression{
 	SortedSet<Character> characterSet;
 
 	final static Pattern opPattern = 
-			Pattern.compile("^([a-jA-J]+)\\s*([\\+\\-\\*\\/])\\s*([a-jA-J]+)\\s*=\\s*([a-jA-J]+)\\s*$");
+			Pattern.compile("^([a-zA-Z]+)\\s*([\\+\\-\\*\\/])\\s*([a-zA-Z]+)\\s*=\\s*([a-zA-Z]+)\\s*$");
 
 	public static Expression fromString(String descr, int base) throws BadInputException{
 
