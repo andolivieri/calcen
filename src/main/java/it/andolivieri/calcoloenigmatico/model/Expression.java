@@ -7,6 +7,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import it.andolivieri.calcoloenigmatico.model.BadInputException;
+
 public class Expression{
 
 	String operand1;

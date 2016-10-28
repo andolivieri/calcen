@@ -1,5 +1,7 @@
 package it.andolivieri.calcoloenigmatico.model;
 
+import it.andolivieri.calcoloenigmatico.model.BadInputException;
+
 public enum Operation{
 	SUM('+'),
 	SUBTRACT('-'),

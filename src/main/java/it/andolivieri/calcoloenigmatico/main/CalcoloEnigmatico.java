@@ -1,4 +1,4 @@
-package it.andolivieri.calcoloenigmatico.model;
+package it.andolivieri.calcoloenigmatico.main;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,19 +9,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import it.andolivieri.calcoloenigmatico.solvers.SmartSolver;
+import it.andolivieri.calcoloenigmatico.model.Expression;
+import it.andolivieri.calcoloenigmatico.model.Problem;
+import it.andolivieri.calcoloenigmatico.model.BadInputException;
+import it.andolivieri.calcoloenigmatico.solvers.JSTSolver;
 import it.andolivieri.calcoloenigmatico.solvers.Solver;
 
-class BadInputException extends Exception{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	public BadInputException(String message){
-		super(message);
-	}
-}
 
 public class CalcoloEnigmatico {
 
@@ -32,7 +25,7 @@ public class CalcoloEnigmatico {
 		CalcoloEnigmatico c = new CalcoloEnigmatico();
 		Problem p = c.leggiDaFile(path, 10);
 		
-		Solver solver = new SmartSolver();
+		Solver solver = new JSTSolver();
 		
 		Map<Character, Integer> result = solver.solve(p);
 		

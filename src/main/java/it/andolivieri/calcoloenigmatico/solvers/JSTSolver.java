@@ -10,7 +10,7 @@ import it.andolivieri.calcoloenigmatico.model.Expression;
 import it.andolivieri.calcoloenigmatico.model.Problem;
 import it.andolivieri.calcoloenigmatico.solvers.generators.KPermutationGenerator;
 
-public class SmartSolver extends Solver{
+public class JSTSolver extends Solver{
 
 	static final String characters = "abcdefghij";
 	static final int base = 10;
